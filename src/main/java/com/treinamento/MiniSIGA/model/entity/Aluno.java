@@ -1,43 +1,61 @@
 package com.treinamento.MiniSIGA.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
-@Table(name = "Aluno", schema = "prince")
+@Table(name = "Aluno", schema = "minisiga")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Aluno {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
-    @Type(type = "uuid-char")
-    private UUID id;
+    @GeneratedValue(generator = "gnosys-uuid")
+    @GenericGenerator(name="gnosys-uuid", strategy = "uuid2")
+    private String id;
 
-    @Basic
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "cpf", updatable = false, nullable = false, unique = true, length = 11)
+    @Length(min = 11, max = 11)
+    @Column(name = "cpf")
     private String cpf;
 
-    @Basic
     @Column(name = "matriculaDRE")
     private String matriculaDre;
 
-    @Basic
-    @Column(name = "curso_id")
-    private String cursoId;
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private CursoUFRJ curso;
 
-    public UUID getId() {
+    @ManyToMany
+    @JoinTable(name = "AlunoTurma", joinColumns = @JoinColumn(name = "aluno_id"),
+    inverseJoinColumns = @JoinColumn(name = "turma_id"))
+    private List<Turma> turmas;
+
+    @OneToOne(mappedBy = "aluno")
+    private Historico historico;
+
+    public Historico getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(Historico historico) {
+        this.historico = historico;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -65,12 +83,20 @@ public class Aluno {
         this.matriculaDre = matriculaDre;
     }
 
-    public String getCursoId() {
-        return cursoId;
+    public CursoUFRJ getCurso() {
+        return curso;
     }
 
-    public void setCursoId(String cursoId) {
-        this.cursoId = cursoId;
+    public void setCurso(CursoUFRJ curso) {
+        this.curso = curso;
+    }
+
+    public List<Turma> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
     }
 
     @Override
@@ -78,11 +104,11 @@ public class Aluno {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Aluno that = (Aluno) o;
-        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(cpf, that.cpf) && Objects.equals(matriculaDre, that.matriculaDre) && Objects.equals(cursoId, that.cursoId);
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(cpf, that.cpf) && Objects.equals(matriculaDre, that.matriculaDre) && Objects.equals(curso, that.curso);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, cpf, matriculaDre, cursoId);
+        return Objects.hash(id, nome, cpf, matriculaDre, curso);
     }
 }

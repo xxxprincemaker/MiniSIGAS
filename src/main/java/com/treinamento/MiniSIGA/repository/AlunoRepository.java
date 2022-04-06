@@ -15,4 +15,8 @@ public interface AlunoRepository extends JpaRepository<Aluno, String> {
     void deleteByMatriculaDre(String matriculaDre);
 
     void deleteByCpf(String cpf);
+
+    void deleteAlunoById(String id);
+
+    Aluno getAlunoById(String s);
 }
