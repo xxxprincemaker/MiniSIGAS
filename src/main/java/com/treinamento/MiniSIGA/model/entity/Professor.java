@@ -6,12 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Professor", schema = "minisiga")
-public class Professor {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+@AttributeOverride(name = "id", column = @Column(name = "id"))
+public class Professor extends AbstractEntity{
 
     private String nome;
 

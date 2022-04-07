@@ -25,8 +25,7 @@ public class AlunoService {
     }
 
     public Aluno getAlunoById(String id){
-        Aluno aluno = alunoRepository.getAlunoById(id);
-        return aluno;
+        return alunoRepository.getAlunoById(id);
     }
 
     public AlunoDTO getAlunoDTO(String id){

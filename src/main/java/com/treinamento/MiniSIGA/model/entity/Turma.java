@@ -12,12 +12,8 @@ import java.util.List;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Turma {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+@AttributeOverride(name = "id", column = @Column(name = "id"))
+public class Turma extends AbstractEntity{
 
     private String nome;
 
@@ -26,10 +22,11 @@ public class Turma {
     @Column(name = "disciplina_id")
     private String disciplinaId;
 
+    @ManyToOne
+    private Professor professor_1_id;
 
-    private String professor_1_id;
-
-    private String professor_2_id;
+    @ManyToOne
+    private Professor professor_2_id;
 
     @ManyToMany(mappedBy = "turmas")
     private List<Aluno> alunos;
@@ -66,19 +63,19 @@ public class Turma {
         this.disciplinaId = disciplinaId;
     }
 
-    public String getProfessor_1_id() {
+    public Professor getProfessor_1_id() {
         return professor_1_id;
     }
 
-    public void setProfessor_1_id(String professor_1_id) {
+    public void setProfessor_1_id(Professor professor_1_id) {
         this.professor_1_id = professor_1_id;
     }
 
-    public String getProfessor_2_id() {
+    public Professor getProfessor_2_id() {
         return professor_2_id;
     }
 
-    public void setProfessor_2_id(String professor_2_id) {
+    public void setProfessor_2_id(Professor professor_2_id) {
         this.professor_2_id = professor_2_id;
     }
 
@@ -90,4 +87,5 @@ public class Turma {
         this.alunos = alunos;
     }
 
+    
 }

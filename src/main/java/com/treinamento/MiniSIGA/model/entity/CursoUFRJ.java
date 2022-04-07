@@ -2,18 +2,12 @@ package com.treinamento.MiniSIGA.model.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class CursoUFRJ {
-
-    @Id
-    @GeneratedValue(generator = "gnosys-uuid")
-    @GenericGenerator(name="gnosys-uuid", strategy = "uuid2")
-    private String id;
+@AttributeOverride(name = "id", column = @Column(name = "id"))
+public class CursoUFRJ extends AbstractEntity{
 
     private Date date;
 

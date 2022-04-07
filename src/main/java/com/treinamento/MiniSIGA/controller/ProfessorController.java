@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/professor")
+@RequestMapping(path = "/professor")
 public class ProfessorController {
 
     private final ProfessorService professorService;
@@ -20,7 +20,7 @@ public class ProfessorController {
     }
 
     @GetMapping(path = "/id/{id}", produces = "application/json")
-    public Professor getProfessor(@PathVariable String id){
+    public Professor getProfessor(@PathVariable String id) {
         return professorService.getProfessorById(id);
     }
 }

@@ -14,12 +14,8 @@ import java.util.Objects;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Aluno {
-
-    @Id
-    @GeneratedValue(generator = "gnosys-uuid")
-    @GenericGenerator(name="gnosys-uuid", strategy = "uuid2")
-    private String id;
+@AttributeOverride(name = "id", column = @Column(name = "id"))
+public class Aluno extends AbstractEntity{
 
     @Column(name = "nome")
     private String nome;

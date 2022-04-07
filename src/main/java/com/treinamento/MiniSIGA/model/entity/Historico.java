@@ -5,12 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-public class Historico {
-
-    @Id
-    @GeneratedValue(generator = "gnosys-uuid")
-    @GenericGenerator(name="gnosys-uuid", strategy = "uuid2")
-    private String id;
+@AttributeOverride(name = "id", column = @Column(name = "id"))
+public class Historico extends AbstractEntity{
 
     @Column(name = "cr_medio")
     private String crmedio;
